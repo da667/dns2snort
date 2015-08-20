@@ -21,14 +21,14 @@ parser = argparse.ArgumentParser(
                      @3XPlo1T2
                 ---------------------
 Generates DNS snort rules from a list of domains.
-Usage: dns2rule.py -i <infile> -o <outfile>
+Usage: dns2rule.py -i <infile> -o <outfile> -s 1000000
 Infile format:
 www.evil.com
 Outfile format:
 alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:"BLACKLIST DNS known malware domain www.evil.com"; flow:to_server; byte_test:1,!&,0xF8,2; content:"|03|www|04|evil|03|com|00|"; fast_pattern:only; metadata:service dns;  sid:1000000; rev:1;)
 '''))
 
-#Infile, outfile, and sid arguments via ArgParse. All required.
+#Infile, outfile, and sid arguments via ArgParse are all required.
 
 parser.add_argument('-i', dest="infile", required=True,
                     help="The name of the file containing a list of Domains, One domain per line.")

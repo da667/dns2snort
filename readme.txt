@@ -6,10 +6,11 @@ Purpose: Given a file containing a list of fully qualified DNS domains, generate
 Requires: argparse, textwrap, python 2.7
 Tested on: OSX, Ubuntu, Debian
 
-Options (all fields except -h are required!):
+Options (INFILE, OUTFILE, and SID arguments are all required!):
 -i : input file. Point the script to the file that contains the list of domains (one domain per line)
 -o : output file: File to output your new snort rules
 -s : SID. This is integer value that must be between 1000000 and 2000000 (one million and two million)
+-w : Remove the 'www' subdomain from domains that have it.
 -h : prints out the most badass help message you've ever seen.
 
 This script supports TLDS, and FQDNS up to four subdomains deep - see the example below, in addition to the sampledns.txt and sample.rules files provided with this script.
