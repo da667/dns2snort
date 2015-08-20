@@ -6,6 +6,7 @@
 
 import argparse
 import textwrap
+import re
 
 #Initialize argparse and print the big ass description and help usage block if -h or --help is used
 
@@ -34,6 +35,7 @@ parser.add_argument('-i', dest="infile", required=True,
 parser.add_argument('-o', dest="outfile", required=True, help="The name of the file to output your snort rules to.")
 parser.add_argument('-s', dest="sid", type=int, required=True,
                     help="The snort sid to start numbering incrementally at. This number should be between 1000000 and 2000000.")
+parser.add_argument('-w', dest="www", required=False, action='store_true', help="Remove the 'www' subdomain from domains that have it.")
 args = parser.parse_args()
 
 #This is a small check to ensure -s is set to a valid value between one and two million - the local rules range.
@@ -58,6 +60,8 @@ with open(args.outfile, 'w') as fout:
     with open(args.infile, 'r') as f:
         for line in f:
             domain = line.rstrip()
+            if args.www == True: 
+                domain = re.sub('^www\.', '', domain, flags=re.IGNORECASE)
             segment = domain.split('.')
             if len(segment) == 1:
                 sega = (hex(len(segment[0])))[2:]
