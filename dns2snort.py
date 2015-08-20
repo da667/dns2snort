@@ -63,7 +63,7 @@ with open(args.outfile, 'w') as fout:
                 sega = (hex(len(segment[0])))[2:]
                 if int(len(sega)) == 1:
                     sega = "0%s" % sega
-                rule = ("alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:\"BLACKLIST DNS domain %s\"; flow:to_server; byte_test:1,!&,0xF8,2; content:\"|%s|%s|%s|%s|00|\"; fast_pattern:only; metadata:service dns;  sid:%s; rev:1;)\n" % (domain, sega.upper(), segment[0], args.sid))
+                rule = ("alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:\"BLACKLIST DNS domain %s\"; flow:to_server; byte_test:1,!&,0xF8,2; content:\"|%s|%s|00|\"; fast_pattern:only; metadata:service dns;  sid:%s; rev:1;)\n" % (domain, sega.upper(), segment[0], args.sid))
                 fout.write(rule)
                 print rule
                 args.sid += 1
