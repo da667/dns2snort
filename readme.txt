@@ -25,7 +25,7 @@ stupidlylongsubdomain.lol.wutski.biz
 
 ..becomes:
 
-alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:"BLACKLIST DNS domain .pw"; flow:to_server; byte_test:1,!&,0xF8,2; content:"|00||02|pw|00|"; fast_pattern:only; metadata:service dns;  sid:1000000; rev:1;)
+alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:"BLACKLIST DNS domain .pw"; flow:to_server; byte_test:1,!&,0xF8,2; content:"|02|pw|00|"; fast_pattern:only; metadata:service dns;  sid:1000000; rev:1;)
 alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:"BLACKLIST DNS domain evilcorp.co"; flow:to_server; byte_test:1,!&,0xF8,2; content:"|08|evilcorp|02|co|00|"; fast_pattern:only; metadata:service dns;  sid:1000001; rev:1;)
 alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:"BLACKLIST DNS domain www.evil.com"; flow:to_server; byte_test:1,!&,0xF8,2; content:"|03|www|04|evil|03|com|00|"; fast_pattern:only; metadata:service dns;  sid:1000002; rev:1;)
 alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:"BLACKLIST DNS domain seemstoteslegit.notreally.tk"; flow:to_server; byte_test:1,!&,0xF8,2; content:"|0F|seemstoteslegit|09|notreally|02|tk|00|"; fast_pattern:only; metadata:service dns;  sid:1000003; rev:1;)

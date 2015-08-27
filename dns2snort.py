@@ -123,4 +123,3 @@ with open(args.outfile, 'w') as fout:
                 print "the number of segments in the domain %s is greater than 4. Skipping." % domain
                 pass
 exit()
-
