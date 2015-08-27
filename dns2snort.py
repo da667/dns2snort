@@ -63,6 +63,11 @@ with open(args.outfile, 'w') as fout:
             if args.www == True: 
                 domain = re.sub('^www\.', '', domain, flags=re.IGNORECASE)
             segment = domain.split('.')
+            #try/except fixes a bug with TLD rule creation where segment has 2 elements and element 0 is '' for some reason.
+            try:
+                segment.remove('')
+            except ValueError:
+                pass
             if len(segment) == 1:
                 sega = (hex(len(segment[0])))[2:]
                 if int(len(sega)) == 1:
@@ -109,8 +114,8 @@ with open(args.outfile, 'w') as fout:
                 segd = (hex(len(segment[3])))[2:]
                 if int(len(segd)) == 1:
                     segd = "0%s" % segd
+                    segd = "0%s" % segd
                 rule = ("alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:\"BLACKLIST DNS domain %s\"; flow:to_server; byte_test:1,!&,0xF8,2; content:\"|%s|%s|%s|%s|%s|%s|%s|%s|00|\"; fast_pattern:only; metadata:service dns;  sid:%s; rev:1;)\n" % (domain, sega.upper(), segment[0], segb.upper(), segment[1], segc.upper(), segment[2], segd.upper(), segment[3], args.sid))
-
                 print rule
                 fout.write(rule)
                 args.sid += 1
@@ -118,3 +123,4 @@ with open(args.outfile, 'w') as fout:
                 print "the number of segments in the domain %s is greater than 4. Skipping." % domain
                 pass
 exit()
+
