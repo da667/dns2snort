@@ -114,7 +114,6 @@ with open(args.outfile, 'w') as fout:
                 segd = (hex(len(segment[3])))[2:]
                 if int(len(segd)) == 1:
                     segd = "0%s" % segd
-                    segd = "0%s" % segd
                 rule = ("alert udp $HOME_NET any -> $EXTERNAL_NET 53 (msg:\"BLACKLIST DNS domain %s\"; flow:to_server; byte_test:1,!&,0xF8,2; content:\"|%s|%s|%s|%s|%s|%s|%s|%s|00|\"; fast_pattern:only; metadata:service dns;  sid:%s; rev:1;)\n" % (domain, sega.upper(), segment[0], segb.upper(), segment[1], segc.upper(), segment[2], segd.upper(), segment[3], args.sid))
                 print rule
                 fout.write(rule)
